@@ -1,0 +1,7 @@
+opencv-python-headless
+grpcio
+grpcio-tools
+grpcio-health-checking
+numpy
+ultralytics
+

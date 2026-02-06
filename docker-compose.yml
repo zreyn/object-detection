@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  inference:
+    build:
+      context: .
+      dockerfile: inference/Dockerfile
+    ports:
+      - "50051:50051"
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  camera:
+    build:
+      context: .
+      dockerfile: camera/Dockerfile
+    depends_on:
+      - inference
+    environment:
+      - INFERENCE_SERVER=inference:50051
+      - DISPLAY=${DISPLAY}
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+    devices:
+      # Attempt to map video device. 
+      # On Linux this is typically /dev/video0. 
+      # On Mac/Windows Docker Desktop, webcam passthrough is often not supported directly.
+      # You may need to run the client LOCALLY if this fails.
+      - /dev/video0:/dev/video0 
+    privileged: true
