@@ -1,0 +1,47 @@
+oot@ubuntu:/workspace# python3 main.py
+WARNING ⚠️ user config directory '/root/.config/Ultralytics' is not writable, using '/tmp/Ultralytics'. Set YOLO_CONFIG_DIR to override.
+Creating new Ultralytics Settings v0.0.6 file ✅ 
+View Ultralytics Settings with 'yolo settings' or at '/tmp/Ultralytics/settings.json'
+Update Settings with 'yolo settings key=value', i.e. 'yolo settings runs_dir=path/to/dir'. For help see https://docs.ultralytics.com/quickstart/#ultralytics-settings.
+
+(gst-plugin-scanner:362): GLib-GObject-WARNING **: 00:36:06.023: cannot register existing type 'GstRtpSrc'
+
+(gst-plugin-scanner:362): GLib-GObject-CRITICAL **: 00:36:06.024: g_type_add_interface_static: assertion 'G_TYPE_IS_INSTANTIATABLE (instance_type)' failed
+
+(gst-plugin-scanner:362): GLib-CRITICAL **: 00:36:06.024: g_once_init_leave: assertion 'result != 0' failed
+
+(gst-plugin-scanner:362): GStreamer-CRITICAL **: 00:36:06.024: gst_element_register: assertion 'g_type_is_a (type, GST_TYPE_ELEMENT)' failed
+
+(gst-plugin-scanner:362): GLib-GObject-WARNING **: 00:36:06.024: cannot register existing type 'GstRtpSink'
+
+(gst-plugin-scanner:362): GLib-GObject-CRITICAL **: 00:36:06.024: g_type_add_interface_static: assertion 'G_TYPE_IS_INSTANTIATABLE (instance_type)' failed
+
+(gst-plugin-scanner:362): GLib-CRITICAL **: 00:36:06.024: g_once_init_leave: assertion 'result != 0' failed
+
+(gst-plugin-scanner:362): GStreamer-CRITICAL **: 00:36:06.024: gst_element_register: assertion 'g_type_is_a (type, GST_TYPE_ELEMENT)' failed
+sh: 1: lsmod: not found
+sh: 1: modprobe: not found
+GST_ARGUS: Creating output stream
+CONSUMER: Waiting until producer is connected...
+GST_ARGUS: Available Sensor modes :
+GST_ARGUS: 3280 x 2464 FR = 21.000000 fps Duration = 47619048 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 3280 x 1848 FR = 28.000001 fps Duration = 35714284 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 1920 x 1080 FR = 29.999999 fps Duration = 33333334 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 1640 x 1232 FR = 29.999999 fps Duration = 33333334 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: 1280 x 720 FR = 59.999999 fps Duration = 16666667 ; Analog Gain range min 1.000000, max 10.625000; Exposure Range min 13000, max 683709000;
+
+GST_ARGUS: Running with following settings:
+   Camera index = 0 
+   Camera mode  = 2 
+   Output Stream W = 1920 H = 1080 
+   seconds to Run    = 0 
+   Frame Rate = 29.999999 
+GST_ARGUS: Setup Complete, Starting captures for 0 seconds
+GST_ARGUS: Starting repeat capture requests.
+CONSUMER: Producer has connected; continuing.
+double free or corruption (out)
+
