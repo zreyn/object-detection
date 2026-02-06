@@ -9,6 +9,8 @@ import os
 def main():
     # Connect to the inference server
     # 'inference' is the hostname in docker-compose
+    server_address = os.environ.get('INFERENCE_SERVER', 'inference:50051')
+
     # Wait for server to be healthy
     from grpc_health.v1 import health_pb2
     from grpc_health.v1 import health_pb2_grpc
