@@ -6,6 +6,31 @@ import service_pb2
 import service_pb2_grpc
 import os
 
+def get_camera_capture():
+    """Get video capture - supports Jetson CSI cameras via GStreamer or USB webcams."""
+    use_csi = os.environ.get('USE_CSI_CAMERA', 'false').lower() == 'true'
+
+    if use_csi:
+        # Jetson CSI camera using GStreamer pipeline
+        width = int(os.environ.get('CAMERA_WIDTH', '1280'))
+        height = int(os.environ.get('CAMERA_HEIGHT', '720'))
+        framerate = int(os.environ.get('CAMERA_FRAMERATE', '30'))
+
+        gst_pipeline = (
+            f"nvarguscamerasrc ! "
+            f"video/x-raw(memory:NVMM), width={width}, height={height}, framerate={framerate}/1 ! "
+            f"nvvidconv ! video/x-raw, format=BGRx ! "
+            f"videoconvert ! video/x-raw, format=BGR ! appsink"
+        )
+        print(f"Using CSI camera with GStreamer pipeline")
+        return cv2.VideoCapture(gst_pipeline, cv2.CAP_GSTREAMER)
+    else:
+        # USB webcam or default V4L2
+        device = int(os.environ.get('CAMERA_DEVICE', '0'))
+        print(f"Using V4L2 camera device {device}")
+        return cv2.VideoCapture(device)
+
+
 def main():
     # Connect to the inference server
     # 'inference' is the hostname in docker-compose
@@ -33,7 +58,7 @@ def main():
 
     stub = service_pb2_grpc.YoloServiceStub(channel)
 
-    cap = cv2.VideoCapture(0)
+    cap = get_camera_capture()
     
     # Check if camera opened successfully
     if not cap.isOpened():

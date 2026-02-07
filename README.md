@@ -17,10 +17,24 @@ If your Docker environment supports direct webcam access (e.g., Linux with `/dev
 ```bash
 docker-compose up --build
 ```
+Or, if you're using a Jetson CSI camera:
+```bash                                                                                      
+  USE_CSI_CAMERA=true docker compose up                                                                           
+```
+
 This will start both services. The camera service will attempt to open a GUI window with the video feed.  You may need to run this if the camera container can't connect to the display:
 
 ```bash
 xhost +local:docker
+```
+
+The environment supports some camera options:
+```
+  Optional camera settings:                                                                                       
+  - CAMERA_WIDTH (default: 1280)                                                                                  
+  - CAMERA_HEIGHT (default: 720)                                                                                  
+  - CAMERA_FRAMERATE (default: 30)                                                                                
+  - CAMERA_DEVICE (default: 0, for USB webcams)  
 ```
 
 ## Running on macOS (or if Webcam/GUI fails in Docker)
@@ -38,7 +52,7 @@ Wait for the healthy signal (the server is ready).
 Open a new terminal and install dependencies:
 ```bash
 # Optional: Create a virtual environment
-python3 -m venv venv
+python3 -m venv venvgit 
 source venv/bin/activate
 
 # Install requirements

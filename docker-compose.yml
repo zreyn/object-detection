@@ -20,6 +20,12 @@ services:
       - INFERENCE_SERVER=inference:50051
       - DISPLAY=${DISPLAY}
       - PYTHONUNBUFFERED=1
+      # CSI camera support for Jetson
+      - USE_CSI_CAMERA=${USE_CSI_CAMERA:-false}
+      - CAMERA_WIDTH=${CAMERA_WIDTH:-1280}
+      - CAMERA_HEIGHT=${CAMERA_HEIGHT:-720}
+      - CAMERA_FRAMERATE=${CAMERA_FRAMERATE:-30}
+      - CAMERA_DEVICE=${CAMERA_DEVICE:-0}
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
     devices:
