@@ -17,7 +17,11 @@ If your Docker environment supports direct webcam access (e.g., Linux with `/dev
 ```bash
 docker-compose up --build
 ```
-This will start both services. The camera service will attempt to open a GUI window with the video feed.
+This will start both services. The camera service will attempt to open a GUI window with the video feed.  You may need to run this if the camera container can't connect to the display:
+
+```bash
+xhost +local:docker
+```
 
 ## Running on macOS (or if Webcam/GUI fails in Docker)
 
