@@ -1,0 +1,27 @@
+FROM nvcr.io/nvidia/l4t-pytorch:r36.2.0-pth2.1-py3
+
+WORKDIR /app
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    python3-opencv \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install Python packages
+COPY inference/requirements.txt .
+RUN pip3 install --no-cache-dir grpcio grpcio-tools grpcio-health-checking ultralytics
+
+# Copy proto file and generate gRPC code
+COPY protos/service.proto ./protos/service.proto
+RUN cd protos && python3 -m grpc_tools.protoc -I. --python_out=../ --grpc_python_out=../ service.proto
+
+# Copy server code and model
+COPY inference/server.py .
+COPY inference/*.pt .
+
+EXPOSE 50051
+
+HEALTHCHECK --interval=5s --timeout=3s --start-period=10s --retries=3 \
+    CMD python3 -c "import grpc; from grpc_health.v1 import health_pb2_grpc, health_pb2; ch=grpc.insecure_channel('localhost:50051'); stub=health_pb2_grpc.HealthStub(ch); stub.Check(health_pb2.HealthCheckRequest(service='yolo.YoloService'))" || exit 1
+
+CMD ["python3", "-u", "server.py"]

@@ -17,11 +17,6 @@ If your Docker environment supports direct webcam access (e.g., Linux with `/dev
 ```bash
 docker-compose up --build
 ```
-Or, if you're using a Jetson CSI camera:
-```bash                                                                                      
-  USE_CSI_CAMERA=true docker compose up                                                                           
-```
-
 This will start both services. The camera service will attempt to open a GUI window with the video feed.  You may need to run this if the camera container can't connect to the display:
 
 ```bash
@@ -40,6 +35,11 @@ The environment supports some camera options:
 ## Running on macOS (or if Webcam/GUI fails in Docker)
 
 On macOS and some Windows setups, accessing the webcam and showing a GUI from inside a Docker container is difficult. The recommended approach is to run the **Inference Service** in Docker and the **Camera Client** locally.
+
+## On the Jetson Orin Nano Super dev kit
+```bash
+sudo docker compose -f docker-compose.jetson.yml up --build
+```
 
 ### 1. Start the Inference Service
 ```bash

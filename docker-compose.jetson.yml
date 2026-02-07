@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  inference:
+    build:
+      context: .
+      dockerfile: inference/Dockerfile.jetson
+    ports:
+      - "50051:50051"
+    environment:
+      - PYTHONUNBUFFERED=1
+    runtime: nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  camera:
+    build:
+      context: .
+      dockerfile: camera/Dockerfile.jetson
+    depends_on:
+      - inference
+    environment:
+      - INFERENCE_SERVER=inference:50051
+      - DISPLAY=${DISPLAY}
+      - PYTHONUNBUFFERED=1
+      - USE_CSI_CAMERA=true
+      - CAMERA_WIDTH=${CAMERA_WIDTH:-1280}
+      - CAMERA_HEIGHT=${CAMERA_HEIGHT:-720}
+      - CAMERA_FRAMERATE=${CAMERA_FRAMERATE:-30}
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /tmp/argus_socket:/tmp/argus_socket
+    devices:
+      - /dev/video0:/dev/video0
+    runtime: nvidia
+    privileged: true
